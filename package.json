@@ -1,0 +1,13 @@
+{
+    "name": "animal-classifier",
+    "version": "1.0.0",
+    "dependencies": {
+    },
+    "scripts": {
+        "start": "npm start --prefix animal-classifier-client",
+        "test": "npm run test --prefix animal-classifier-client"
+    },
+    "engines": {
+        "node": "12.x"
+    }
+}

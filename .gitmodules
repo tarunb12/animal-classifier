@@ -1,0 +1,9 @@
+[submodule "animal-classifier-client"]
+	path = animal-classifier-client
+	url = https://github.com/tarunb12/animal-classifier-client.git
+[submodule "animal-classifier-lambda"]
+	path = animal-classifier-lambda
+	url = https://github.com/tarunb12/animal-classifier-lambda.git
+[submodule "animal-classifier-model"]
+	path = animal-classifier-model
+	url = https://github.com/tarunb12/animal-classifier-model.git
