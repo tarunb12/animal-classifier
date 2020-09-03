@@ -1,10 +1,7 @@
 {
     "name": "animal-classifier",
     "version": "1.0.0",
-    "dependencies": {
-        "classnames": "^2.2.6",
-        "material-ui-popup-state": "^1.6.1"
-    },
+    "dependencies": {},
     "scripts": {
         "start": "npm start --prefix animal-classifier-client",
         "test": "npm run test --prefix animal-classifier-client"
