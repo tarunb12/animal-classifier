@@ -13,10 +13,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     borderWidth: 2,
     borderRadius: 2,
-    borderColor: '#eeeeee',
+    borderColor: theme.palette.type === 'light' ? '#eee' : '#313131',
     borderStyle: 'dashed',
-    backgroundColor: '#fafafa',
-    color: '#bdbdbd',
+    backgroundColor: theme.palette.type === 'light' ? '#fafafa' : '#bdbdbd',
+    color: theme.palette.type === 'light' ? '#bdbdbd' : '#fafafa',
     outline: 'none',
     transition: 'border .24s ease-in-out',
     width: '100%',
@@ -25,14 +25,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   accept: {
     borderColor: theme.palette.success.main,
-    backgroundColor: green[50],
+    backgroundColor: theme.palette.type === 'light'
+      ? green[50]
+      : green[100],
   },
   active: {
     borderColor: theme.palette.primary.main,
   },
   reject: {
     borderColor: theme.palette.error.main,
-    backgroundColor: red[50],
+    backgroundColor: theme.palette.type === 'light'
+      ? red[50]
+      : red[100],
   },
   text: {
     fontSize: '2em',

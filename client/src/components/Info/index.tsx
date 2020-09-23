@@ -1,4 +1,10 @@
-import React, { Fragment, MouseEvent, useState } from 'react';
+import React, {
+  Dispatch,
+  Fragment,
+  MouseEvent,
+  SetStateAction,
+  useState
+} from 'react';
 import {
   Divider,
   IconButton,
@@ -6,11 +12,14 @@ import {
   ListItem,
   ListItemText,
   ListSubheader,
+  PaletteType,
   Popover,
+  Switch,
   Theme,
   Tooltip,
   Typography,
   makeStyles,
+  useTheme,
 } from '@material-ui/core';
 import { Info as InfoIcon } from '@material-ui/icons'
 
@@ -34,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'left',
   },
   animalSubheader: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    opacity: '1.0',
   },
   animal: {
     display: 'flex',
@@ -53,12 +62,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Info = () => {
+const Info = (props: InfoProps) => {
+  const theme = useTheme();
   const classes = useStyles();
+  const [toggled, setToggled] = useState<boolean>(theme.palette.type === 'dark');
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const { setPaletteType } = props;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  const handleToggle = () => {
+    setToggled(toggled => {
+      const dark = !toggled;
+      localStorage.setItem('dark', JSON.stringify(dark));
+      setPaletteType(dark ? 'dark' : 'light');
+      return !toggled;
+    })
+  }
   
   const open = Boolean(anchorEl);
   const id = open ? 'info-popover' : undefined;
@@ -117,10 +137,22 @@ const Info = () => {
               } />
             </ListItem>
           ))}
+          <Divider />
+          <ListItem key='theme-toggle' className={classes.animal}>
+            <span className={classes.animalText}>Dark Mode</span>
+            <Switch
+              checked={toggled}
+              onChange={handleToggle}
+            />
+          </ListItem>
         </List>
       </Popover>
     </Fragment>
   );
+}
+
+interface InfoProps {
+  setPaletteType: Dispatch<SetStateAction<PaletteType>>,
 }
 
 export default Info;

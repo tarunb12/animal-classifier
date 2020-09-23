@@ -33,6 +33,11 @@ const useStyles = (isBreed: boolean, isBreedType?: boolean) => makeStyles((theme
       height: `calc(100% - ${theme.spacing(1)}px)`,
     },
   },
+  label: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2rem',
+    },
+  },
 }));
 
 const PredictorLabel = (props: PredictorLabelProps) => {
@@ -40,24 +45,18 @@ const PredictorLabel = (props: PredictorLabelProps) => {
   const [checked, setChecked] = useState(false);
   const { prediction } = props;
 
-  const loading = prediction === undefined;
-
   useEffect(() => {
     setChecked(prev => !prev);
   }, []);
 
-  // console.log(props.isBreedType)
-
-  useEffect(() => {
-    clearInterval();
-  }, [props.prediction]);
+  const loading = prediction === undefined;
 
   return (
     <Fade in={checked} timeout={1000}>
       <Paper elevation={3} className={classes.labelContainer}>
         {loading
           ? <CircularProgress size={40} />
-          : <Typography variant='h3'>
+          : <Typography variant='h3' className={classes.label}>
               {`${prediction}${` ${ANIMAL_TO_EMOJI[prediction as Animal] || ''}`}`}
             </Typography>}
       </Paper>

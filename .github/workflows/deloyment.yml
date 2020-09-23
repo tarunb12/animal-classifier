@@ -7,6 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
+  # deploy-lambda
+  # deploy-client
   deploy:
 
     runs-on: ubuntu-latest

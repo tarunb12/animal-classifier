@@ -17,6 +17,7 @@ const useStyles = (imageUrl?: string) => makeStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    outline: 0,
     padding: theme.spacing(2),
     marginRight: theme.spacing(1),
     marginBottom: 0,
@@ -39,14 +40,18 @@ const useStyles = (imageUrl?: string) => makeStyles((theme: Theme) => ({
   },
   accept: {
     borderColor: theme.palette.success.main,
-    backgroundColor: green[50],
+    backgroundColor: theme.palette.type === 'light'
+      ? green[50]
+      : green[100],
   },
   active: {
     borderColor: theme.palette.primary.main,
   },
   reject: {
     borderColor: theme.palette.error.main,
-    backgroundColor: red[50],
+    backgroundColor: theme.palette.type === 'light'
+      ? red[50]
+      : red[100],
   },
 }));
 

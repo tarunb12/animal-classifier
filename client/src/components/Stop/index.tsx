@@ -11,7 +11,7 @@ import {
   Tooltip,
   makeStyles,
 } from '@material-ui/core';
-import { RemoveCircle as RemoveIcon } from '@material-ui/icons';
+import { Close as CloseIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => ({
   yesButton: {
@@ -38,7 +38,7 @@ const Stop = (props: StopProps) => {
     <Fragment>
       <Tooltip title='Stop' aria-label='stop-tip'>
         <IconButton aria-label='stop' onClick={handleOpen}>
-          <RemoveIcon style={{ color: '#fff', fontSize: 30 }} />
+          <CloseIcon style={{ color: '#fff', fontSize: 30 }} />
         </IconButton>
       </Tooltip>
       <Dialog

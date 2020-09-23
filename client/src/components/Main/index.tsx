@@ -72,8 +72,8 @@ const Main = (props: MainProps) => {
         setImage(undefined);
       }
       else {
-        setTimeout(() => setPrediction('dog'), 3000);
-        setTimeout(() => { setBreedPrediction('shih-tzu'); setProcessing(false); }, 6000);
+        setTimeout(() => setPrediction('dog'), 6000);
+        setTimeout(() => { setBreedPrediction('shih-tzu'); setProcessing(false); }, 12000);
         setImage({ imageUrl });
         setProcessing(true);
         // axios.get A => if breed B then axios.get B else done => done
@@ -149,9 +149,9 @@ interface MainProps {
   prediction?: Animal,
   breedPrediction?: Breed,
   setProcessing: Dispatch<SetStateAction<boolean>>,
-  setImage: Dispatch<SetStateAction<Image | undefined>>
-  setPrediction: Dispatch<SetStateAction<Animal | undefined>>
-  setBreedPrediction: Dispatch<SetStateAction<Breed | undefined>>
+  setImage: Dispatch<SetStateAction<Image | undefined>>,
+  setPrediction: Dispatch<SetStateAction<Animal | undefined>>,
+  setBreedPrediction: Dispatch<SetStateAction<Breed | undefined>>,
   reset: () => void,
 }
 
