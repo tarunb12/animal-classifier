@@ -16,21 +16,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Clone client submodule
-        shell: bash
-        run: git clone https://github.com/tarunb12/animal-classifier-client.git
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Packages
-        run: npm install --prefix animal-classifier-client
+        run: npm install
       - name: Test
-        run: npm test --prefix animal-classifier-client
+        run: npm test
       - name: Build
-        run: npm run build --prefix animal-classifier-client
+        run: npm run build
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./build
+          publish_dir: ./animal-classifier-client/build
