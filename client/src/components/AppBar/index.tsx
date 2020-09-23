@@ -1,11 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Dispatch, Fragment, SetStateAction } from 'react';
 import {
   AppBar,
+  PaletteType,
   Theme,
   Toolbar,
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 
 import {
   Info,
@@ -13,6 +15,11 @@ import {
 } from '..';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  appBar: {
+    backgroundColor: theme.palette.type === 'light'
+      ? theme.palette.primary.main
+      : grey[800],
+  },
   title: {
     flexGrow: 1,
     WebkitTouchCallout: 'none',
@@ -33,12 +40,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const NavigationBar = (props: NavigationBarProps) => {
+  const { processing, reset, setPaletteType } = props;
   const classes = useStyles();
-  const { processing, reset } = props;
 
   return (
     <Fragment>
-      <AppBar position='fixed'>
+      <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <Typography className={classes.title} variant='h6'>
             Animal Classifier
@@ -49,7 +56,7 @@ const NavigationBar = (props: NavigationBarProps) => {
                 reset={reset}
               />
             : null}
-          <Info />
+          <Info setPaletteType={setPaletteType} />
         </Toolbar>
       </AppBar>
       <Toolbar />
@@ -59,6 +66,7 @@ const NavigationBar = (props: NavigationBarProps) => {
 
 interface NavigationBarProps {
   processing: boolean,
+  setPaletteType: Dispatch<SetStateAction<PaletteType>>,
   reset: () => void,
 }
 
