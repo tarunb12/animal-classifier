@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "dependencies": {},
     "scripts": {
+        "install": "npm install --prefix animal-classifier-client",
         "start": "npm start --prefix animal-classifier-client",
         "test": "npm run test --prefix animal-classifier-client"
     },
