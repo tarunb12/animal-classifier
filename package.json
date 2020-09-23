@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "dependencies": {},
     "scripts": {
-        "build": "npm run build --prefix animal-classifier-client",
-        "install": "npm install --prefix animal-classifier-client",
-        "start": "npm start --prefix animal-classifier-client",
-        "test": "npm test --prefix animal-classifier-client"
+        "build": "npm run build --prefix client",
+        "install": "npm install --prefix client",
+        "start": "npm start --prefix client",
+        "test": "npm test --prefix client"
     },
     "engines": {
         "node": "12.x"
