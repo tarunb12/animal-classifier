@@ -10,7 +10,7 @@ import {
 import { blue, pink, red } from '@material-ui/core/colors';
 
 import { AppBar, Main } from './components';
-import { Animal, Breed, Image } from './types';
+import { Animal, Breed, Prediction, Image } from './types';
 import { getCookie, setCookie } from './utils';
 
 const theme = (paletteType: PaletteType) => createMuiTheme({
@@ -52,8 +52,8 @@ const App = () => {
   const [paletteType, setPaletteType] = useState<PaletteType>(initialTheme);
   const [image, setImage] = useState<Image>();
   const [processing, setProcessing] = useState<boolean>(false);
-  const [prediction, setPrediction] = useState<Animal>();
-  const [breedPrediction, setBreedPrediction] = useState<Breed>();
+  const [animalPrediction, setAnimalPrediction] = useState<Prediction<Animal>>();
+  const [breedPrediction, setBreedPrediction] = useState<Prediction<Breed>>();
 
   useEffect(() => {
     setCookie('paletteType', paletteType);
@@ -61,7 +61,7 @@ const App = () => {
 
   const reset = () => {
     setProcessing(false);
-    setPrediction(undefined);
+    setAnimalPrediction(undefined);
     setBreedPrediction(undefined);
     setImage(undefined);
   }
@@ -79,11 +79,11 @@ const App = () => {
           <Main
             processing={processing}
             image={image}
-            prediction={prediction}
+            animalPrediction={animalPrediction}
             breedPrediction={breedPrediction}
             setProcessing={setProcessing}
             setImage={setImage}
-            setPrediction={setPrediction}
+            setAnimalPrediction={setAnimalPrediction}
             setBreedPrediction={setBreedPrediction}
             reset={reset}
           />

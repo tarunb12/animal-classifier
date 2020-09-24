@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     borderWidth: 2,
     borderRadius: 2,
-    borderColor: theme.palette.type === 'light' ? '#eee' : '#313131',
+    borderColor: theme.palette.type === 'light' ? '#eee' : '#535353',
     borderStyle: 'dashed',
     backgroundColor: theme.palette.type === 'light' ? '#fafafa' : '#bdbdbd',
     color: theme.palette.type === 'light' ? '#bdbdbd' : '#fafafa',

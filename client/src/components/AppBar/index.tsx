@@ -59,7 +59,7 @@ const NavigationBar = (props: NavigationBarProps) => {
           <Info setPaletteType={setPaletteType} />
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      <Toolbar style={{ padding: 0 }} />
     </Fragment>
   );
 }

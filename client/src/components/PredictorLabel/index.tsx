@@ -4,18 +4,20 @@ import {
   Fade,
   Paper,
   Theme,
+  Tooltip,
   Typography,
   makeStyles,
 } from '@material-ui/core';
 
 import { ANIMAL_TO_EMOJI } from '../../constants';
-import { Animal, Breed } from '../../types';
+import { Animal, Breed, Prediction } from '../../types';
 
 const useStyles = (isBreed: boolean, isBreedType?: boolean) => makeStyles((theme: Theme) => ({
-  labelContainer: {
+  predictionContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
     marginTop: isBreed ? theme.spacing(1) : undefined,
     marginBottom: isBreed ? undefined : theme.spacing(1),
     marginLeft: theme.spacing(1),
@@ -33,16 +35,34 @@ const useStyles = (isBreed: boolean, isBreedType?: boolean) => makeStyles((theme
       height: `calc(100% - ${theme.spacing(1)}px)`,
     },
   },
+  labelContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+  confidenceContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: '100%',
+    padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
+  },
   label: {
     [theme.breakpoints.down('sm')]: {
       fontSize: '2rem',
     },
   },
+  confidence: {
+    fontSize: '1rem',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
+  },
 }));
 
 const PredictorLabel = (props: PredictorLabelProps) => {
   const classes = useStyles(props.isBreed, props.isBreedType)();
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState<boolean>(false);
   const { prediction } = props;
 
   useEffect(() => {
@@ -53,12 +73,21 @@ const PredictorLabel = (props: PredictorLabelProps) => {
 
   return (
     <Fade in={checked} timeout={1000}>
-      <Paper elevation={3} className={classes.labelContainer}>
-        {loading
-          ? <CircularProgress size={40} />
-          : <Typography variant='h3' className={classes.label}>
-              {`${prediction}${` ${ANIMAL_TO_EMOJI[prediction as Animal] || ''}`}`}
-            </Typography>}
+      <Paper elevation={3} className={classes.predictionContainer}>
+        <div className={classes.labelContainer}>
+          {loading
+            ? <CircularProgress size={40} />
+            : <Typography variant='h3' className={classes.label}>
+                {`${prediction?.value}${` ${ANIMAL_TO_EMOJI[prediction?.value as Animal] || ''}`}`}
+              </Typography>}
+        </div>
+        <div className={classes.confidenceContainer}>
+          {prediction && <Tooltip title='Confidence' aria-label='confidence-tip'>
+            <span className={classes.confidence}>
+              {prediction.confidence * 100}%
+            </span>
+          </Tooltip>}
+        </div>
       </Paper>
     </Fade>
   );
@@ -67,7 +96,7 @@ const PredictorLabel = (props: PredictorLabelProps) => {
 interface PredictorLabelProps {
   isBreed: boolean,
   isBreedType?: boolean,
-  prediction?: Animal | Breed,
+  prediction?: Prediction<Animal | Breed>,
 }
 
 export default PredictorLabel;
