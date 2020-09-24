@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 const App = () => {
   const classes = useStyles();
   const prefersDark = useMediaQuery('@media (prefers-color-scheme: dark)');
-  const initialTheme = getCookie('paletteType') === 'dark'
-    ? 'dark'
+  const initialTheme = getCookie('paletteType') as PaletteType
+    ? getCookie('paletteType') as PaletteType
     : prefersDark
       ? 'dark'
       : 'light';
