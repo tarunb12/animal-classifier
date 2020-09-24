@@ -62,6 +62,7 @@ const useStyles = (isBreed: boolean, isBreedType?: boolean) => makeStyles((theme
 
 const PredictorLabel = (props: PredictorLabelProps) => {
   const classes = useStyles(props.isBreed, props.isBreedType)();
+  const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   const { prediction } = props;
 
@@ -82,11 +83,18 @@ const PredictorLabel = (props: PredictorLabelProps) => {
               </Typography>}
         </div>
         <div className={classes.confidenceContainer}>
-          {prediction && <Tooltip title='Confidence' aria-label='confidence-tip'>
-            <span className={classes.confidence}>
-              {prediction.confidence * 100}%
-            </span>
-          </Tooltip>}
+          {prediction &&
+            <Tooltip
+              open={open}
+              onOpen={() => setOpen(true)}
+              onClose={() => setOpen(false)}
+              title='Confidence'
+              aria-label='confidence-tip'
+            >
+              <span className={classes.confidence} onClick={() => setOpen(open => !open)}>
+                {prediction.confidence * 100}%
+              </span>
+            </Tooltip>}
         </div>
       </Paper>
     </Fade>
