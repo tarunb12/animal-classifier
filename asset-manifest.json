@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/animal-classifier/static/css/main.caf6128a.chunk.css",
-    "main.js": "/animal-classifier/static/js/main.89bf98f1.chunk.js",
-    "main.js.map": "/animal-classifier/static/js/main.89bf98f1.chunk.js.map",
+    "main.js": "/animal-classifier/static/js/main.4fa4e22b.chunk.js",
+    "main.js.map": "/animal-classifier/static/js/main.4fa4e22b.chunk.js.map",
     "runtime-main.js": "/animal-classifier/static/js/runtime-main.0f99dc76.js",
     "runtime-main.js.map": "/animal-classifier/static/js/runtime-main.0f99dc76.js.map",
     "static/js/2.4dc4d0cd.chunk.js": "/animal-classifier/static/js/2.4dc4d0cd.chunk.js",
     "static/js/2.4dc4d0cd.chunk.js.map": "/animal-classifier/static/js/2.4dc4d0cd.chunk.js.map",
     "index.html": "/animal-classifier/index.html",
-    "precache-manifest.73764333d26c2a33db78f5cb4a4bfd50.js": "/animal-classifier/precache-manifest.73764333d26c2a33db78f5cb4a4bfd50.js",
+    "precache-manifest.ad3f95db966d777f5bbfa696ff7860f6.js": "/animal-classifier/precache-manifest.ad3f95db966d777f5bbfa696ff7860f6.js",
     "service-worker.js": "/animal-classifier/service-worker.js",
     "static/css/main.caf6128a.chunk.css.map": "/animal-classifier/static/css/main.caf6128a.chunk.css.map",
     "static/js/2.4dc4d0cd.chunk.js.LICENSE.txt": "/animal-classifier/static/js/2.4dc4d0cd.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0f99dc76.js",
     "static/js/2.4dc4d0cd.chunk.js",
     "static/css/main.caf6128a.chunk.css",
-    "static/js/main.89bf98f1.chunk.js"
+    "static/js/main.4fa4e22b.chunk.js"
   ]
 }
