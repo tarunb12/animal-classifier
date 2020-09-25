@@ -1,16 +1,15 @@
-name: Deployment
+name: Client Deployment
 
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  paths:
+    - 'client/**'
 
 jobs:
-  # deploy-lambda
-  # deploy-client
   deploy:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
