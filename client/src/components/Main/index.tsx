@@ -16,6 +16,7 @@ import {
 import {
   Animal,
   Breed,
+  Prediction,
   Image,
 } from '../../types';
 import {
@@ -55,25 +56,32 @@ const Main = (props: MainProps) => {
   const {
     processing,
     image,
-    prediction,
+    animalPrediction,
     breedPrediction,
     setProcessing,
     setImage,
-    setPrediction,
+    setAnimalPrediction,
     setBreedPrediction,
     reset,
   } = props;
 
-  const handleImageUploadUrl = (imageUrl: string) => {
-    reset();
+  
+  const partialReset = () => {
+    setProcessing(false);
+    setAnimalPrediction(undefined);
+    setBreedPrediction(undefined);
+  }
+
+  const handleImageUploadUrl = (imageUrl: string, partial?: boolean) => {
+    partial ? partialReset() : reset();
     isReachableUrl(imageUrl, (err: boolean) => {
       if (err) {
         setError('URL must represent a valid image file.');
         setImage(undefined);
       }
       else {
-        setTimeout(() => setPrediction('dog'), 6000);
-        setTimeout(() => { setBreedPrediction('shih-tzu'); setProcessing(false); }, 12000);
+        setTimeout(() => setAnimalPrediction({ value: 'dog', confidence: .98 }), 3000);
+        setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
         setImage({ imageUrl });
         setProcessing(true);
         // axios.get A => if breed B then axios.get B else done => done
@@ -82,11 +90,11 @@ const Main = (props: MainProps) => {
     });
   }
 
-  const handleImageUpload = (files: FileList | File[] | null) => {
+  const handleImageUpload = (partial?: boolean) => (files: FileList | File[] | null) => {
     if (!files) return;
     const image = files[0];
     if (image) {
-      handleImageUploadUrl(URL.createObjectURL(image));
+      handleImageUploadUrl(URL.createObjectURL(image), partial);
     }
   }
 
@@ -94,9 +102,8 @@ const Main = (props: MainProps) => {
     const url = e.target.value;
     if (isValidImageUrl(url)) {
       setError('');
-      handleImageUploadUrl(url);
+      handleImageUploadUrl(url, true);
     } else {
-      reset();
       setError('URL must represent a valid image file.')
     }
   }
@@ -110,19 +117,19 @@ const Main = (props: MainProps) => {
         name='upload-photo'
         multiple={false}
         type='file'
-        onChange={e => handleImageUpload(e.target.files)}
+        onChange={e => handleImageUpload(false)(e.target.files)}
         disabled={processing}
       />
       <div className={classes.main}>
         {image
           ? <Predictor
-              prediction={prediction}
+              animalPrediction={animalPrediction}
               breedPrediction={breedPrediction}
               image={image}
-              handleImageUpload={handleImageUpload}
+              handleImageUpload={handleImageUpload(true)}
               processing={processing}
             />
-          : <DropZone handleImageUpload={handleImageUpload} />}
+          : <DropZone handleImageUpload={handleImageUpload(false)} />}
         <Toolbar className={classes.upload}>
           <TextField
             error={!!error}
@@ -146,12 +153,12 @@ const Main = (props: MainProps) => {
 interface MainProps {
   processing: boolean,
   image?: Image,
-  prediction?: Animal,
-  breedPrediction?: Breed,
+  animalPrediction?: Prediction<Animal>,
+  breedPrediction?: Prediction<Breed>,
   setProcessing: Dispatch<SetStateAction<boolean>>,
   setImage: Dispatch<SetStateAction<Image | undefined>>,
-  setPrediction: Dispatch<SetStateAction<Animal | undefined>>,
-  setBreedPrediction: Dispatch<SetStateAction<Breed | undefined>>,
+  setAnimalPrediction: Dispatch<SetStateAction<Prediction<Animal> | undefined>>,
+  setBreedPrediction: Dispatch<SetStateAction<Prediction<Breed> | undefined>>,
   reset: () => void,
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Theme, makeStyles } from '@material-ui/core';
 
 import { ANIMALS_WITH_BREED } from '../../constants';
-import { Animal, Breed, Image, AnimalWithBreed } from '../../types';
+import { Animal, AnimalWithBreed, Breed, Prediction, Image } from '../../types';
 import { ImagePreview } from '..';
 import PredictorLabel from '../PredictorLabel';
 
@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: '0 1 50%',
     display: 'flex',
     height: '100%',
-    width: '50%',
+    maxWidth: `calc(50% - ${theme.spacing(1)}px)`,
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     [theme.breakpoints.down('md')]: {
       height: `calc(50% - ${theme.spacing(1)}px)`,
-      width: '100%',
+      maxWidth: '100%',
       flexWrap: 'nowrap',
       alignItems: 'normal'
     }
@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Predictor = (props: PredictorProps) => {
   const classes = useStyles();
+  const { animalPrediction, breedPrediction } = props;
 
-  const isBreedType = props.prediction ? ANIMALS_WITH_BREED.includes(props.prediction as AnimalWithBreed) : false;
+  const isBreedType = animalPrediction ? ANIMALS_WITH_BREED.includes(animalPrediction.value as AnimalWithBreed) : false;
   // console.log(isBreedType, props.prediction, props.prediction ? NIMALS_WITH_BREED:'w', 'dog' in ANIMALS_WITH_BREED)
 
 
@@ -57,9 +58,9 @@ const Predictor = (props: PredictorProps) => {
         handleImageUpload={props.handleImageUpload}
       />
       <div className={classes.resultContainer}>
-        <PredictorLabel isBreedType={isBreedType} isBreed={false} prediction={props.prediction} />
+        <PredictorLabel isBreedType={isBreedType} isBreed={false} prediction={animalPrediction} />
         {isBreedType &&
-          <PredictorLabel isBreedType={isBreedType} isBreed={true} prediction={props.breedPrediction} />}
+          <PredictorLabel isBreedType={isBreedType} isBreed={true} prediction={breedPrediction} />}
       </div>
     </div>
   );
@@ -67,8 +68,8 @@ const Predictor = (props: PredictorProps) => {
 
 interface PredictorProps {
   processing: boolean,
-  prediction?: Animal,
-  breedPrediction?: Breed,
+  animalPrediction?: Prediction<Animal>,
+  breedPrediction?: Prediction<Breed>,
   image?: Image,
   handleImageUpload: (file: FileList | File[] | null) => void,
 }

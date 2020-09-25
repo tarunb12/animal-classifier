@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import { Theme, makeStyles } from '@material-ui/core';
-
-import { AppBar, Main } from './components';
-import { Animal, Breed, Image } from './types';
+import React, { useEffect, useState } from 'react';
+import { Theme, makeStyles, useMediaQuery } from '@material-ui/core';
 
 import {
   CssBaseline,
@@ -11,6 +8,10 @@ import {
   createMuiTheme,
 } from '@material-ui/core';
 import { blue, pink, red } from '@material-ui/core/colors';
+
+import { AppBar, Main } from './components';
+import { Animal, Breed, Prediction, Image } from './types';
+import { getCookie, setCookie } from './utils';
 
 const theme = (paletteType: PaletteType) => createMuiTheme({
   palette: {
@@ -42,16 +43,25 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const App = () => {
   const classes = useStyles();
-  const initialTheme = Boolean(localStorage.getItem('dark')) ? 'dark' : 'light';
+  const prefersDark = useMediaQuery('@media (prefers-color-scheme: dark)');
+  const initialTheme = getCookie('paletteType') as PaletteType
+    ? getCookie('paletteType') as PaletteType
+    : prefersDark
+      ? 'dark'
+      : 'light';
   const [paletteType, setPaletteType] = useState<PaletteType>(initialTheme);
   const [image, setImage] = useState<Image>();
   const [processing, setProcessing] = useState<boolean>(false);
-  const [prediction, setPrediction] = useState<Animal>();
-  const [breedPrediction, setBreedPrediction] = useState<Breed>();
+  const [animalPrediction, setAnimalPrediction] = useState<Prediction<Animal>>();
+  const [breedPrediction, setBreedPrediction] = useState<Prediction<Breed>>();
+
+  useEffect(() => {
+    setCookie('paletteType', paletteType);
+  }, [paletteType]);
 
   const reset = () => {
     setProcessing(false);
-    setPrediction(undefined);
+    setAnimalPrediction(undefined);
     setBreedPrediction(undefined);
     setImage(undefined);
   }
@@ -69,11 +79,11 @@ const App = () => {
           <Main
             processing={processing}
             image={image}
-            prediction={prediction}
+            animalPrediction={animalPrediction}
             breedPrediction={breedPrediction}
             setProcessing={setProcessing}
             setImage={setImage}
-            setPrediction={setPrediction}
+            setAnimalPrediction={setAnimalPrediction}
             setBreedPrediction={setBreedPrediction}
             reset={reset}
           />

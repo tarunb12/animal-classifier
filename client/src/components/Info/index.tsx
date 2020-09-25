@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'left',
   },
   animalSubheader: {
-    opacity: '1.0',
+    backgroundColor: theme.palette.type === 'light'
+      ? 'rgba(255,255,255,1)'
+      : 'rgba(66,66,66,1)',
   },
   animal: {
     display: 'flex',
