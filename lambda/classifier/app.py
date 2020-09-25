@@ -1,12 +1,15 @@
 import json
 import logging
+from typing import Any, Dict
+
+from context.lambda_context import LambdaContext
 
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
 
-def lambda_handler(event, context) -> dict:
-    log.info('event: %s\n context: %s', event, context)
+def lambda_handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:
+    log.info('\n\nevent: %s\n\ncontext: %s\n', event, context)
 
     return {
         "statusCode": 200,
@@ -20,6 +23,5 @@ def lambda_handler(event, context) -> dict:
                 "name": "shih-tzu",
                 "confidence": .87
             },
-            # "location": ip.text.replace("\n", "")
         }),
     }
