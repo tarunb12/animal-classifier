@@ -3,7 +3,7 @@ import json
 import pytest
 
 from classifier.app import lambda_handler
-
+from classifier.lambda_context import LambdaDict, LambdaContext
 
 @pytest.fixture()
 def apigw_event():
