@@ -38,21 +38,13 @@ Resources:
   ClassifierApi:
     Type: AWS::Serverless::Api
     Properties:
-      Auth:
-        DefaultAuthorizer: AWS_IAM
       BinaryMediaTypes:
         - image~1*
-      # Cors:
-      #   AllowMethods: "'GET, OPTIONS'"
-      #   AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-requested-with'"
-      #   AllowOrigin: "'https://tarunb12.github.io'"
-      #   MaxAge: "'600'"
-      #   AllowCredentials: True
-      # GatewayResponses:
-      #   DEFAULT_4XX:
-      #     ResponseParameters:
-      #       Headers:
-      #         Access-Control-Allow-Origin: "'*'"
+      Cors:
+        AllowMethods: "'POST,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-requested-with'"
+        # AllowOrigin: "'https://tarunb12.github.io'"
+        AllowOrigin: "'*'"
       StageName: Prod
 
   ClassifierFunction:
@@ -67,7 +59,7 @@ Resources:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /animal
-            Method: get
+            Method: post
             RestApiId: !Ref ClassifierApi
 
 Outputs:
