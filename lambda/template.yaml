@@ -42,17 +42,17 @@ Resources:
         DefaultAuthorizer: AWS_IAM
       BinaryMediaTypes:
         - image~1*
-      Cors:
-        AllowMethods: "'POST, GET'"
-        AllowHeaders: "'X-Forwarded-For'"
-        AllowOrigin: "'tarunb12.github.io'"
-        MaxAge: "'600'"
-        AllowCredentials: True
-      GatewayResponses:
-        DEFAULT_4XX:
-          ResponseParameters:
-            Headers:
-              Access-Control-Allow-Origin: "'*'"
+      # Cors:
+      #   AllowMethods: "'GET, OPTIONS'"
+      #   AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-requested-with'"
+      #   AllowOrigin: "'https://tarunb12.github.io'"
+      #   MaxAge: "'600'"
+      #   AllowCredentials: True
+      # GatewayResponses:
+      #   DEFAULT_4XX:
+      #     ResponseParameters:
+      #       Headers:
+      #         Access-Control-Allow-Origin: "'*'"
       StageName: Prod
 
   ClassifierFunction:
