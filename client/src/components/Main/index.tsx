@@ -24,6 +24,7 @@ import {
   Predictor,
 } from '..';
 import { isReachableUrl, isValidImageUrl } from '../../utils';
+import { AxiosPromise } from 'axios';
 
 const useStyles = makeStyles((theme: Theme) => ({
   upload: {
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
 }));
+
+declare const apigClientFactory: { newClient: (config: Config) => { animalPost: () => AxiosPromise<any> } };
 
 const Main = (props: MainProps) => {
   const classes = useStyles();
@@ -86,6 +89,11 @@ const Main = (props: MainProps) => {
         setProcessing(true);
         // axios.get A => if breed B then axios.get B else done => done
         // axios.get A => setModel A => tfjs A => if breed B then axios.get B else done => setBreedModel B => tfjs B => done
+        // const apigClient = apigClientFactory.newClient({
+        //   region: process.env.REACT_APP_REGION,
+        //   url: process.env.REACT_APP_API_URL,
+        // });
+        // apigClient.animalPost().then(console.log).catch(console.error);
       }
     });
   }
@@ -160,6 +168,17 @@ interface MainProps {
   setAnimalPrediction: Dispatch<SetStateAction<Prediction<Animal> | undefined>>,
   setBreedPrediction: Dispatch<SetStateAction<Prediction<Breed> | undefined>>,
   reset: () => void,
+}
+
+interface Config {
+  accessKey?: string,
+  secretKey?: string,
+  sessionToken?: string,
+  region?: string,
+  url?: string,
+  apiKey?: string,
+  defaultContentType?: string,
+  defaultAcceptType?: string,
 }
 
 export default Main;

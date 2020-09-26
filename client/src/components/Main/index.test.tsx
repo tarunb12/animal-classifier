@@ -8,7 +8,7 @@ test('renders component', () => {
       processing={false}
       setProcessing={() => {}}
       setImage={() => {}}
-      setPrediction={() => {}}
+      setAnimalPrediction={() => {}}
       setBreedPrediction={() => {}}
       reset={() => {}}
     />
