@@ -8,20 +8,19 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 29
 
 Resources:
   ClassifierApi:
     Type: AWS::Serverless::Api
     Properties:
-      BinaryMediaTypes:
-        - image~1*
       Cors:
         AllowMethods: "'POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-requested-with'"
         # AllowOrigin: "'https://tarunb12.github.io'"
         AllowOrigin: "'*'"
       StageName: Prod
+
 
   ClassifierFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -38,13 +37,38 @@ Resources:
             Path: /animal
             Method: post
             RestApiId: !Ref ClassifierApi
+      Environment:
+        Variables:
+          MODEL_BUCKET: animal-classifier-models
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:Get*
+              Resource: 'arn:aws:s3:::animal-classifier-models/*'
+            - Effect: Allow
+              Action:
+                - s3:List*
+              Resource: 'arn:aws:s3:::animal-classifier-models'
+
+  ClassifierFunctionPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - ClassifierApi
+      - ClassifierFunction
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ClassifierFunction
+      Principal: apigateway.amazonaws.com
 
   TFLiteLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: tflite-runtime-layer
-      Description: Lambda layer containing api dependencies [tflite_runtime, numpy]
-      ContentUri: dependencies/lib.zip
+      Description: Lambda layer containing api dependencies [tflite_runtime, numpy, pillow]
+      ContentUri: layer/
       CompatibleRuntimes:
         - python3.7
 
@@ -58,6 +82,6 @@ Outputs:
   ClassifierFunction:
     Description: "Classifier Lambda Function ARN"
     Value: !GetAtt ClassifierFunction.Arn
-  ClassifierFunctionIamRole:
+  ClassifierFunctionRole:
     Description: "Implicit IAM Role created for Classifier function"
     Value: !GetAtt ClassifierFunctionRole.Arn

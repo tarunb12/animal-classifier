@@ -10,7 +10,7 @@ import {
 import { green, red } from '@material-ui/core/colors';
 import classNames from 'classnames';
 
-import { Image } from '../../types';
+import { ImageUpload } from '../../types';
 
 const useStyles = (imageUrl?: string) => makeStyles((theme: Theme) => ({
   imageCanvas: {
@@ -128,7 +128,7 @@ const ImagePreview = (props: ImagePreviewProps) => {
 
 interface ImagePreviewProps {
   processing: boolean,
-  image?: Image,
+  image?: ImageUpload,
   handleImageUpload: (file: FileList | File[] | null) => void,
 }
 

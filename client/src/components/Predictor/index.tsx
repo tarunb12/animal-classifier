@@ -2,7 +2,7 @@ import React from 'react';
 import { Theme, makeStyles } from '@material-ui/core';
 
 import { ANIMALS_WITH_BREED } from '../../constants';
-import { Animal, AnimalWithBreed, Breed, Prediction, Image } from '../../types';
+import { Animal, AnimalWithBreed, Breed, Prediction, ImageUpload } from '../../types';
 import { ImagePreview } from '..';
 import PredictorLabel from '../PredictorLabel';
 
@@ -70,7 +70,7 @@ interface PredictorProps {
   processing: boolean,
   animalPrediction?: Prediction<Animal>,
   breedPrediction?: Prediction<Breed>,
-  image?: Image,
+  image?: ImageUpload,
   handleImageUpload: (file: FileList | File[] | null) => void,
 }
 
