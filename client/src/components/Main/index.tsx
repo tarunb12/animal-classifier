@@ -16,8 +16,8 @@ import {
 import {
   Animal,
   Breed,
-  Prediction,
   Image,
+  Prediction,
 } from '../../types';
 import {
   DropZone,
@@ -90,6 +90,8 @@ const Main = (props: MainProps) => {
         // axios.get A => if breed B then axios.get B else done => done
         // axios.get A => setModel A => tfjs A => if breed B then axios.get B else done => setBreedModel B => tfjs B => done
         // const apigClient = apigClientFactory.newClient({
+        //   accessKey: process.env.REACT_APP_ACCESS_KEY,
+        //   secretKey: process.env.REACT_APP_SECRET_KEY,
         //   region: process.env.REACT_APP_REGION,
         //   url: process.env.REACT_APP_API_URL,
         // });
@@ -108,7 +110,10 @@ const Main = (props: MainProps) => {
 
   const handleOnUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
-    if (isValidImageUrl(url)) {
+    console.log(url.trim().length);
+    if (url.trim().length === 0) {
+      setError('');
+    } else if (isValidImageUrl(url)) {
       setError('');
       handleImageUploadUrl(url, true);
     } else {

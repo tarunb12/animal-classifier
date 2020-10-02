@@ -3,5 +3,5 @@ import { render } from '@testing-library/react';
 import AppBar from './index';
 
 test('renders component', () => {
-  render(<AppBar />);
+  render(<AppBar processing={false} setPaletteType={() => {}} reset={() => {}} />);
 });

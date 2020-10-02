@@ -20,9 +20,9 @@ const useStyles = (imageUrl?: string) => makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     outline: 0,
     padding: theme.spacing(2),
-    borderWidth: 0,
-    borderColor: 'none',
+    borderColor: 'transparent',
     borderStyle: 'dashed',
+    borderWidth: 2,
     transition: 'border .24s ease-in-out',
     marginRight: theme.spacing(1),
     marginBottom: 0,
@@ -47,18 +47,15 @@ const useStyles = (imageUrl?: string) => makeStyles((theme: Theme) => ({
     justifyContent: 'flex-end',
   },
   accept: {
-    borderWidth: 2,
     borderColor: theme.palette.success.main,
     backgroundColor: theme.palette.type === 'light'
       ? green[50]
       : green[100],
   },
   active: {
-    borderWidth: 2,
     borderColor: theme.palette.primary.main,
   },
   reject: {
-    borderWidth: 2,
     borderColor: theme.palette.error.main,
     backgroundColor: theme.palette.type === 'light'
       ? red[50]
