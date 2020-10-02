@@ -1,5 +1,7 @@
-.aws-sam
+.aws-sam/build
 .idea
+dependencies/*
+!dependencies/*.zip
 
 # Created by https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode
 

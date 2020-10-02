@@ -11,30 +11,6 @@ Globals:
     Timeout: 3
 
 Resources:
-  ClassifierFunctionRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-                - apigateway.amazonaws.com
-            Action:
-              - sts:AssumeRole
-
-  ClassifierApiPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn:
-      - ClassifierApi
-      - ClassifierFunction
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref ClassifierFunction
-      Principal: apigateway.amazonaws.com
-
   ClassifierApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -51,9 +27,10 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: classifier/
-      Handler: app.lambda_handler
+      Handler: animal.lambda_handler
       Runtime: python3.7
-      Role: !GetAtt ClassifierFunctionRole.Arn
+      Layers:
+        - !Ref TFLiteLayer
       Events:
         Animal:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -61,6 +38,15 @@ Resources:
             Path: /animal
             Method: post
             RestApiId: !Ref ClassifierApi
+
+  TFLiteLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: tflite-runtime-layer
+      Description: Lambda layer containing api dependencies [tflite_runtime, numpy]
+      ContentUri: dependencies/lib.zip
+      CompatibleRuntimes:
+        - python3.7
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
