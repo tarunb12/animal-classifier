@@ -1,5 +1,5 @@
 datasets/*
-# !datasets/*.tgz
+!datasets/*.tgz
 
 models/*
 !models/*.tflite
