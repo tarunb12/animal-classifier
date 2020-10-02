@@ -1,0 +1,7 @@
+datasets/*
+# !datasets/*.tgz
+
+models/*
+!models/*.tflite
+
+tmp/
