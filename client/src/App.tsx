@@ -10,7 +10,7 @@ import {
 import { blue, pink, red } from '@material-ui/core/colors';
 
 import { AppBar, Main } from './components';
-import { Animal, Breed, Prediction, Image } from './types';
+import { Animal, Breed, Prediction, ImageUpload } from './types';
 import { getCookie, setCookie } from './utils';
 
 const theme = (paletteType: PaletteType) => createMuiTheme({
@@ -50,7 +50,7 @@ const App = () => {
       ? 'dark'
       : 'light';
   const [paletteType, setPaletteType] = useState<PaletteType>(initialTheme);
-  const [image, setImage] = useState<Image>();
+  const [image, setImage] = useState<ImageUpload>();
   const [processing, setProcessing] = useState<boolean>(false);
   const [animalPrediction, setAnimalPrediction] = useState<Prediction<Animal>>();
   const [breedPrediction, setBreedPrediction] = useState<Prediction<Breed>>();

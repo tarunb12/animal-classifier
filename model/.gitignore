@@ -1,0 +1,10 @@
+.env
+
+datasets/*
+!datasets/*.tgz
+
+models/*
+!models/*.tflite
+!models/*.json
+
+tmp/
