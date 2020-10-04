@@ -3,5 +3,6 @@ datasets/*
 
 models/*
 !models/*.tflite
+!models/*.json
 
 tmp/
