@@ -8,13 +8,14 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 29
 
 Resources:
   ClassifierApi:
     Type: AWS::Serverless::Api
     Properties:
       BinaryMediaTypes:
+        - multipart~1form-data
         - image~1*
       Cors:
         AllowMethods: "'POST,OPTIONS'"
@@ -22,6 +23,7 @@ Resources:
         # AllowOrigin: "'https://tarunb12.github.io'"
         AllowOrigin: "'*'"
       StageName: Prod
+
 
   ClassifierFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -38,13 +40,18 @@ Resources:
             Path: /animal
             Method: post
             RestApiId: !Ref ClassifierApi
+      Environment:
+        Variables:
+          MODEL_BUCKET: animal-classifier-models
+      Policies:
+        - AmazonS3ReadOnlyAccess
 
   TFLiteLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: tflite-runtime-layer
-      Description: Lambda layer containing api dependencies [tflite_runtime, numpy]
-      ContentUri: dependencies/lib.zip
+      Description: Lambda layer containing api dependencies [tflite_runtime, numpy, pillow]
+      ContentUri: layer/
       CompatibleRuntimes:
         - python3.7
 
