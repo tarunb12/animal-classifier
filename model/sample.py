@@ -110,7 +110,7 @@ session = boto3.Session(
 s3 = session.resource('s3')
 s3.meta.client.upload_file(tflite_model_file, bucket, 'animal/animal.tflite')
 
-output_translation = train_ds.class_indices
+output_translation = {v: k for k, v in train_ds.class_indices.items()}
 output_translation_file = f'{model_dir}.json'
 with open(output_translation_file, 'w') as f:
     json.dump(output_translation, f)
@@ -136,6 +136,5 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.legend(loc='upper right')
 plt.title('Training Loss')
 plt.show()
-
 
 # %%

@@ -10,6 +10,11 @@ on:
     paths:
       - 'client/**'
 
+env:
+  REACT_APP_ACCESS_KEY: ${{ secrets.REACT_APP_ACCESS_KEY }}
+  REACT_APP_SECRET_KEY: ${{ secrets.REACT_APP_SECRET_KEY }}
+  REACT_APP_REGION: ${{ secrets.REACT_APP_REGION }}
+
 jobs:
   deploy:
 
