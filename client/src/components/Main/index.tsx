@@ -27,13 +27,12 @@ import {
 import { isReachableUrl, isValidImageUrl } from '../../utils';
 import { AxiosPromise, AxiosResponse } from 'axios';
 
-const apigClient = apigClientFactory.newClient({
-  accessKey: process.env.REACT_APP_ACCESS_KEY,
-  secretKey: process.env.REACT_APP_SECRET_KEY,
-  region: process.env.REACT_APP_REGION,
-  defaultAcceptType: 'application/json',
-  defaultContentType: 'application/json',
-});
+declare const apigClientFactory: {
+  newClient: (config: Config) => {
+    animalPost: (params?: any, body?: any, additionalParams?: any) => AxiosPromise<any>,
+    animalOptions: (params?: any, body?: any, additionalParams?: any) => AxiosPromise<any>,
+  }
+};
 
 const useStyles = makeStyles((theme: Theme) => ({
   upload: {
@@ -60,8 +59,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-declare const apigClientFactory: { newClient: (config: Config) => { animalPost: (params?: any, body?: any, additionalParams?: any) => AxiosPromise<any> } };
-
 const Main = (props: MainProps) => {
   const classes = useStyles();
   const [error, setError] = useState<string>('');
@@ -77,7 +74,14 @@ const Main = (props: MainProps) => {
     reset,
   } = props;
 
-  
+  const apigClient = apigClientFactory.newClient({
+    accessKey: process.env.REACT_APP_ACCESS_KEY,
+    secretKey: process.env.REACT_APP_SECRET_KEY,
+    region: process.env.REACT_APP_REGION,
+    defaultAcceptType: 'application/json',
+    defaultContentType: 'application/json',
+  });
+
   const partialReset = () => {
     setProcessing(false);
     setAnimalPrediction(undefined);
