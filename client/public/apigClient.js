@@ -22,7 +22,6 @@ apigClientFactory.newClient = function (config) {
             secretKey: '',
             sessionToken: '',
             region: '',
-            url: '',
             apiKey: undefined,
             defaultContentType: 'application/json',
             defaultAcceptType: 'application/json'
@@ -54,7 +53,7 @@ apigClientFactory.newClient = function (config) {
 
     
     // extract endpoint and path from url
-    var invokeUrl = `${config.url}/Prod`;
+    var invokeUrl = 'https://t0f71kvcu9.execute-api.us-east-2.amazonaws.com/Prod';
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
     var pathComponent = invokeUrl.substring(endpoint.length);
 

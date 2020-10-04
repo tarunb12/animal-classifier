@@ -12,11 +12,12 @@ import {
   Toolbar,
   makeStyles,
 } from '@material-ui/core';
+import Compress from 'compress.js';
 
 import {
   Animal,
   Breed,
-  Image,
+  ImageUpload,
   Prediction,
 } from '../../types';
 import {
@@ -24,7 +25,15 @@ import {
   Predictor,
 } from '..';
 import { isReachableUrl, isValidImageUrl } from '../../utils';
-import { AxiosPromise } from 'axios';
+import { AxiosPromise, AxiosResponse } from 'axios';
+
+const apigClient = apigClientFactory.newClient({
+  accessKey: process.env.REACT_APP_ACCESS_KEY,
+  secretKey: process.env.REACT_APP_SECRET_KEY,
+  region: process.env.REACT_APP_REGION,
+  defaultAcceptType: 'application/json',
+  defaultContentType: 'application/json',
+});
 
 const useStyles = makeStyles((theme: Theme) => ({
   upload: {
@@ -51,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-declare const apigClientFactory: { newClient: (config: Config) => { animalPost: () => AxiosPromise<any> } };
+declare const apigClientFactory: { newClient: (config: Config) => { animalPost: (params?: any, body?: any, additionalParams?: any) => AxiosPromise<any> } };
 
 const Main = (props: MainProps) => {
   const classes = useStyles();
@@ -75,42 +84,55 @@ const Main = (props: MainProps) => {
     setBreedPrediction(undefined);
   }
 
+  const predict = (data: string): void => {
+    apigClient
+      .animalPost(undefined, { data: { image: data } }, undefined)
+      .then((res: AxiosResponse<Record<'prediction', any>>)  => res.data)
+      .then((data: Record<'prediction', { name: string, confidence: number }>) => data.prediction)
+      .then(({ name, confidence }) => ({ value: name, confidence } as Prediction<Animal>))
+      .then(setAnimalPrediction)
+      .catch(console.error)
+  }
+
   const handleImageUploadUrl = (imageUrl: string, partial?: boolean) => {
-    partial ? partialReset() : reset();
     isReachableUrl(imageUrl, (err: boolean) => {
       if (err) {
         setError('URL must represent a valid image file.');
         setImage(undefined);
       }
       else {
-        setTimeout(() => setAnimalPrediction({ value: 'dog', confidence: .98 }), 3000);
-        setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
-        setImage({ imageUrl });
-        setProcessing(true);
-        // axios.get A => if breed B then axios.get B else done => done
-        // axios.get A => setModel A => tfjs A => if breed B then axios.get B else done => setBreedModel B => tfjs B => done
-        // const apigClient = apigClientFactory.newClient({
-        //   accessKey: process.env.REACT_APP_ACCESS_KEY,
-        //   secretKey: process.env.REACT_APP_SECRET_KEY,
-        //   region: process.env.REACT_APP_REGION,
-        //   url: process.env.REACT_APP_API_URL,
-        // });
-        // apigClient.animalPost().then(console.log).catch(console.error);
+        fetch(imageUrl)
+          .then(res => res.blob())
+          .then(blob => [new File([blob], 'upload.png', blob)])
+          .then(handleImageUpload(partial))
       }
     });
   }
 
-  const handleImageUpload = (partial?: boolean) => (files: FileList | File[] | null) => {
+  const handleImageUpload = (partial?: boolean) => async (files: FileList | File[] | null) => {
     if (!files) return;
     const image = files[0];
     if (image) {
-      handleImageUploadUrl(URL.createObjectURL(image), partial);
+      partial ? partialReset() : reset();
+      const imageUrl = URL.createObjectURL(image);
+      setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
+      setImage({ image, imageUrl });
+      setProcessing(true);
+
+      const compress = new Compress();
+      compress.compress([image], {
+        size: .5,
+        quality: 1,
+        maxWidth: 96,
+        maxHeight: 96,
+      }).then(data => data[0])
+        .then(image => image.data)
+        .then(predict);
     }
   }
 
   const handleOnUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
-    console.log(url.trim().length);
     if (url.trim().length === 0) {
       setError('');
     } else if (isValidImageUrl(url)) {
@@ -165,11 +187,11 @@ const Main = (props: MainProps) => {
 
 interface MainProps {
   processing: boolean,
-  image?: Image,
+  image?: ImageUpload,
   animalPrediction?: Prediction<Animal>,
   breedPrediction?: Prediction<Breed>,
   setProcessing: Dispatch<SetStateAction<boolean>>,
-  setImage: Dispatch<SetStateAction<Image | undefined>>,
+  setImage: Dispatch<SetStateAction<ImageUpload | undefined>>,
   setAnimalPrediction: Dispatch<SetStateAction<Prediction<Animal> | undefined>>,
   setBreedPrediction: Dispatch<SetStateAction<Prediction<Breed> | undefined>>,
   reset: () => void,

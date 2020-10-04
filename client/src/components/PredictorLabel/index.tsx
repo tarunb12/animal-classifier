@@ -92,7 +92,7 @@ const PredictorLabel = (props: PredictorLabelProps) => {
               aria-label='confidence-tip'
             >
               <span className={classes.confidence} onClick={() => setOpen(open => !open)}>
-                {prediction.confidence * 100}%
+                {(prediction.confidence * 100).toFixed(2)}%
               </span>
             </Tooltip>}
         </div>
