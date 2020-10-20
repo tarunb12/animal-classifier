@@ -119,7 +119,7 @@ const Main = (props: MainProps) => {
     if (image) {
       partial ? partialReset() : reset();
       const imageUrl = URL.createObjectURL(image);
-      setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
+      // setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
       setImage({ image, imageUrl });
       setProcessing(true);
 

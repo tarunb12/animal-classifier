@@ -1,5 +1,6 @@
 .env
 
+data/*
 datasets/*
 !datasets/*.tgz
 
