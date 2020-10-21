@@ -12,4 +12,6 @@ if not os.path.isdir(animals10_path):
 sum((len(f) for _, _, f in os.walk(animals10_path)))
 
 # %%
-splitfolders.ratio(animals10_path, output='data/animals10', seed=1337, ratio=(0.7, 0.15, 0.15))
+splitfolders.ratio(animals10_path, output='data/animals10', seed=1337, ratio=(0.75, 0.25))
+
+# %%

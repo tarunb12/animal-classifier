@@ -95,6 +95,7 @@ const Main = (props: MainProps) => {
       .then((data: Record<'prediction', { name: string, confidence: number }>) => data.prediction)
       .then(({ name, confidence }) => ({ value: name, confidence } as Prediction<Animal>))
       .then(setAnimalPrediction)
+      .then(() => setProcessing(false))
       .catch(console.error)
   }
 
@@ -113,7 +114,7 @@ const Main = (props: MainProps) => {
     });
   }
 
-  const handleImageUpload = (partial?: boolean) => async (files: FileList | File[] | null) => {
+  const handleImageUpload = (partial?: boolean) => (files: FileList | File[] | null) => {
     if (!files) return;
     const image = files[0];
     if (image) {
