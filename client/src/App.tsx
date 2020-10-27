@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Theme, makeStyles, useMediaQuery } from '@material-ui/core';
-
 import {
   CssBaseline,
   PaletteType,
   ThemeProvider,
   createMuiTheme,
+  makeStyles,
+  useMediaQuery,
 } from '@material-ui/core';
 import { blue, pink, red } from '@material-ui/core/colors';
 
@@ -24,7 +24,7 @@ const theme = (paletteType: PaletteType) => createMuiTheme({
   },
 });
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   app: {
     height: '100%',
     margin: 0,

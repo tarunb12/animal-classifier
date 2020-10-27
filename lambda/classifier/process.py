@@ -1,8 +1,6 @@
 from PIL import Image
 
-SIZE = 48
-
-def process_image(img):
+def process_image(img, size):
     # image = Image.frombytes(img, SIZE)
     # old_size = image.size
 

@@ -88,9 +88,10 @@ const Main = (props: MainProps) => {
     setBreedPrediction(undefined);
   }
 
-  const predict = (data: string): void => {
+  const predict = (base64: string): void => {
+    console.log(base64);
     apigClient
-      .animalPost(undefined, { data: { image: data } }, undefined)
+      .animalPost(undefined, { data: { image: base64 } }, undefined)
       .then((res: AxiosResponse<Record<'prediction', any>>)  => res.data)
       .then((data: Record<'prediction', { name: string, confidence: number }>) => data.prediction)
       .then(({ name, confidence }) => ({ value: name, confidence } as Prediction<Animal>))
@@ -114,24 +115,24 @@ const Main = (props: MainProps) => {
     });
   }
 
-  const handleImageUpload = (partial?: boolean) => (files: FileList | File[] | null) => {
+  const handleImageUpload = (partial?: boolean) => async (files: FileList | File[] | null) => {
     if (!files) return;
-    const image = files[0];
-    if (image) {
+    const file = files[0];
+    if (file) {
       partial ? partialReset() : reset();
-      const imageUrl = URL.createObjectURL(image);
+      const imageUrl = URL.createObjectURL(file);
       // setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
-      setImage({ image, imageUrl });
+      setImage({ image: file, imageUrl });
       setProcessing(true);
 
       const compress = new Compress();
-      compress.compress([image], {
+      compress.compress([file], {
         size: .5,
         quality: 1,
-        maxWidth: 96,
-        maxHeight: 96,
+        maxWidth: 128,
+        maxHeight: 128,
       }).then(data => data[0])
-        .then(image => image.data)
+        .then(img => img.data)
         .then(predict);
     }
   }
@@ -181,7 +182,7 @@ const Main = (props: MainProps) => {
           />
           <label htmlFor='upload-photo'>
             <Button variant='contained' component='span' disabled={processing}>
-              Upload
+              Browse
             </Button>
           </label>
         </Toolbar>

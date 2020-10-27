@@ -34,11 +34,16 @@ label_f = f'tmp/{model}.json'
 model_obj_name = f'{model}/{model}.tflite'
 label_obj_name = f'{model}/{model}.json'
 
+log.info('Downloading model from S3...')
 with open(model_f, 'wb') as f:
     s3.download_fileobj(test_bucket_name, model_obj_name, f)
 
+log.info('Downloading labels from S3...')
 with open(label_f, 'wb') as g:
     s3.download_fileobj(test_bucket_name, label_obj_name, g)
 
+log.info('Uploading model to S3...')
 s3.upload_file(model_f, bucket_name, model_obj_name)
+
+log.info('Uploading labels to S3...')
 s3.upload_file(label_f, bucket_name, label_obj_name)

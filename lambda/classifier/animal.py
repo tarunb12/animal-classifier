@@ -3,7 +3,6 @@ import json
 import logging
 import numpy as np
 import os
-from tempfile import TemporaryFile
 import tflite_runtime.interpreter as tflite
 from typing import Any, Dict, List, Tuple
 
