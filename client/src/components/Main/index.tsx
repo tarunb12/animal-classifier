@@ -88,24 +88,15 @@ const Main = (props: MainProps) => {
     setBreedPrediction(undefined);
   }
 
-<<<<<<< HEAD
-  const predict = (data: string): void => {
-    apigClient
-      .animalPost(undefined, { data: { image: data } }, undefined)
-=======
   const predict = (base64: string): void => {
     console.log(base64);
     apigClient
       .animalPost(undefined, { data: { image: base64 } }, undefined)
->>>>>>> 72db02b5642f419064726ce30b237737258856f1
       .then((res: AxiosResponse<Record<'prediction', any>>)  => res.data)
       .then((data: Record<'prediction', { name: string, confidence: number }>) => data.prediction)
       .then(({ name, confidence }) => ({ value: name, confidence } as Prediction<Animal>))
       .then(setAnimalPrediction)
-<<<<<<< HEAD
-=======
       .then(() => setProcessing(false))
->>>>>>> 72db02b5642f419064726ce30b237737258856f1
       .catch(console.error)
   }
 
@@ -126,24 +117,6 @@ const Main = (props: MainProps) => {
 
   const handleImageUpload = (partial?: boolean) => async (files: FileList | File[] | null) => {
     if (!files) return;
-<<<<<<< HEAD
-    const image = files[0];
-    if (image) {
-      partial ? partialReset() : reset();
-      const imageUrl = URL.createObjectURL(image);
-      setTimeout(() => { setBreedPrediction({ value: 'shih-tzu', confidence: .87 }); setProcessing(false); }, 6000);
-      setImage({ image, imageUrl });
-      setProcessing(true);
-
-      const compress = new Compress();
-      compress.compress([image], {
-        size: .5,
-        quality: 1,
-        maxWidth: 96,
-        maxHeight: 96,
-      }).then(data => data[0])
-        .then(image => image.data)
-=======
     const file = files[0];
     if (file) {
       partial ? partialReset() : reset();
@@ -160,7 +133,6 @@ const Main = (props: MainProps) => {
         maxHeight: 128,
       }).then(data => data[0])
         .then(img => img.data)
->>>>>>> 72db02b5642f419064726ce30b237737258856f1
         .then(predict);
     }
   }
