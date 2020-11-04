@@ -47,8 +47,6 @@ const Predictor = (props: PredictorProps) => {
   const { animalPrediction, breedPrediction } = props;
 
   const isBreedType = animalPrediction ? ANIMALS_WITH_BREED.includes(animalPrediction.value as AnimalWithBreed) : false;
-  // console.log(isBreedType, props.prediction, props.prediction ? NIMALS_WITH_BREED:'w', 'dog' in ANIMALS_WITH_BREED)
-
 
   return (
     <div className={classes.container}>

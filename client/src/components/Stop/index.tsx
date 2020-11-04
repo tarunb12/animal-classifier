@@ -44,10 +44,10 @@ const Stop = (props: StopProps) => {
       <Dialog
         open={open && processing}
         onClose={handleClose}
-        aria-labelledby="stop-dialog-title"
-        aria-describedby="stop-dialog-description"
+        aria-labelledby='stop-dialog-title'
+        aria-describedby='stop-dialog-description'
       >
-        <DialogTitle id="stop-dialog-title">
+        <DialogTitle id='stop-dialog-title'>
           Stop image prediction?
         </DialogTitle>
         <DialogContent>

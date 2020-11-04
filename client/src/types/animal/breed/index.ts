@@ -1,5 +1,5 @@
-import { DogBreed } from "./dog";
-import { CatBreed } from "./cat";
+import { DogBreed } from './dog';
+import { CatBreed } from './cat';
 
 type Breed =
   | DogBreed
@@ -7,8 +7,8 @@ type Breed =
   ;
 
 export const ANIMALS_WITH_BREED = [
-  'dog',
-  'cat',
+  // 'dog',
+  // 'cat',
 ] as const;
 export type AnimalWithBreed = typeof ANIMALS_WITH_BREED[number];
 

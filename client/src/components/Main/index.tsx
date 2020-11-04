@@ -89,7 +89,6 @@ const Main = (props: MainProps) => {
   }
 
   const predict = (base64: string): void => {
-    console.log(base64);
     apigClient
       .animalPost(undefined, { data: { image: base64 } }, undefined)
       .then((res: AxiosResponse<Record<'prediction', any>>)  => res.data)
