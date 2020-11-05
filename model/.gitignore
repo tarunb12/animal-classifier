@@ -1,9 +1,6 @@
 .env
 
-<<<<<<< HEAD
-=======
 data/*
->>>>>>> 72db02b5642f419064726ce30b237737258856f1
 datasets/*
 !datasets/*.tgz
 
