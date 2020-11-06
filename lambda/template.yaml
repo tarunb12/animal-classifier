@@ -47,11 +47,15 @@ Resources:
             - Effect: Allow
               Action:
                 - s3:Get*
-              Resource: 'arn:aws:s3:::animal-classifier-models/*'
+              Resource:
+                - 'arn:aws:s3:::animal-classifier-models/*'
+                - 'arn:aws:s3:::animal-classifier-models-test/*'
             - Effect: Allow
               Action:
                 - s3:List*
-              Resource: 'arn:aws:s3:::animal-classifier-models'
+              Resource:
+                - 'arn:aws:s3:::animal-classifier-models'
+                - 'arn:aws:s3:::animal-classifier-models-test'
 
   ClassifierFunctionPermission:
     Type: AWS::Lambda::Permission
