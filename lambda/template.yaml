@@ -39,7 +39,7 @@ Resources:
             RestApiId: !Ref ClassifierApi
       Environment:
         Variables:
-          MODEL_BUCKET: animal-classifier-models
+          MODEL_BUCKET: animal-classifier-models-test
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'

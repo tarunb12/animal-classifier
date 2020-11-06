@@ -128,8 +128,8 @@ const Main = (props: MainProps) => {
       compress.compress([file], {
         size: .5,
         quality: 1,
-        maxWidth: 128,
-        maxHeight: 128,
+        maxWidth: 256,
+        maxHeight: 256,
       }).then(data => data[0])
         .then(img => img.data)
         .then(predict);
