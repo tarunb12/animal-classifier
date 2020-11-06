@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Tuple
 
 # pylint: disable=no-name-in-module
 from lambda_context import LambdaContext
-from model import retrieve_model
+from model import get_labels_map, retrieve_model
 from process import process_image
 
 log = logging.getLogger()
@@ -64,16 +64,11 @@ def run_prediction(model_path: str, base64_image: str) -> List[List[float]]:
 
 
 def translate_prediction(output_data: List[float], labels_path: str) -> Tuple[str, float]:
-    label_translation = get_labels_map(labels_path)
     log.info('Softmax output: %s', output_data)
+    label_translation = get_labels_map(labels_path)
 
     predicted_i = np.argmax(output_data)
     predicted_animal = label_translation[str(predicted_i)]
     confidence = output_data[predicted_i]
 
     return predicted_animal, confidence
-
-
-def get_labels_map(labels_path: str) -> Dict[int, str]:
-    with open(labels_path) as f:
-        return json.load(f)
