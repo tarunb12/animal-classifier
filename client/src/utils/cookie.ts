@@ -4,5 +4,5 @@ export const getCookie = (name: string) => {
 }
 
 export const setCookie = (name: string, value: string, ttl?: number) => {
-  document.cookie = `${name}=${value};path=/;max-age=${ttl || 31536000}`;
+  document.cookie = `${name}=${value};path=/;max-age=${ttl || 31536000};SameSite=Lax`;
 }
